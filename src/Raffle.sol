@@ -37,6 +37,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
 
     /** Events */
     event RaffleEntered(address indexed player, uint256 amount);
+    event WinnerPicked(address indexed winner);
 
     /** Type Declarations */
     enum RaffleState {
@@ -133,6 +134,10 @@ contract Raffle is VRFConsumerBaseV2Plus {
         }
 
         s_raffleState = RaffleState.OPEN;
+        s_players = new address payable[](0); // reset players array
+        s_lastTimeStamp = block.timestamp; // reset the last timestamp
+
+        emit WinnerPicked(s_recentWinner);
     }
 
     /** Getter Functions */
